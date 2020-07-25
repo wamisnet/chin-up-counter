@@ -2,6 +2,7 @@
 #define VL53L0X_h
 
 #include <Arduino.h>
+#include <Wire.h>
 
 class VL53L0X
 {

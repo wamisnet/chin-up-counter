@@ -36,4 +36,3 @@ void Buzzer::startCountEnd() {
   delay(125);
   ledcWriteTone(1, 0);
 }
-
