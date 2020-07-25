@@ -1,0 +1,40 @@
+#count {
+    margin-top: 20px;
+	font-size:4em;
+	text-align:center;
+	line-height:0.95em;
+	font-weight:bold;
+}
+
+input{
+    width:auto;
+}
+
+.chin_up {
+    width:300px;
+}
+
+#door {
+    width:330px;
+    margin:auto;
+}
+
+#five {
+    font-size:30px;
+    text-align:center;
+}
+
+#center_img {
+    text-align:center;
+}
+
+#finish_input{
+    border: 1px solid #00a4e3;
+    background-color: #ffffff;
+    padding: 4px
+}
+
+#setting{
+    text-align:center;
+}
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>けんすいIoT</title>
+    <script src="https://unpkg.com/obniz@3.7.0/obniz.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://obniz.io/css/starter-sample.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://obniz.io/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+
+<script>
+
+</script>
+<div id="obniz-debug"></div>
+<div id="setting">
+    <h2>けんすい で 鍵をあけよう！</h2>
+    <label for="finish_input">
+        > 鍵をあけるまでの回数
+        <input type="number" style="" id="finish_input" value="5" max="255" min="0"/>
+        回
+    </label>
+    <br>
+    <button class="btn btn-primary" id="finish_btn">レベルアップ回数セット</button>
+    <button class="btn btn-outline-primary" id="clear_btn">カウントクリア</button>
+</div>
+<p id="count"></p>
+<p id="five"></p>
+<div id="center_img">
+    <img src="door.png" id="door">
+    <img src="up.png" id="up" class="chin_up">
+    <img src="down.png" id="down" class="chin_up">
+</div>
+
+
+<script>
+    document.getElementById("door").hidden = true;
+    document.getElementById("up").hidden = true;
+    document.getElementById("down").hidden = false;
+    let plugin = new Obniz("OBNIZ_ID",{local_connect:false});
+    plugin.onconnect = async function () {
+        $("#clear_btn").click(function() {
+            plugin.plugin.send("mdc");
+            document.getElementById("count").innerText =　"";
+            document.getElementById("five").innerText = "";
+            document.getElementById("door").hidden = true;
+            document.getElementById("up").hidden = true;
+            document.getElementById("down").hidden = false;
+        });
+        $("#finish_btn").click(function() {
+            plugin.plugin.send(Number($("#finish_input").val()));
+        });
+        plugin.plugin.onreceive = data => {
+            let str = "";
+            for (const dt of data) {
+                str += String.fromCharCode(dt);
+            }
+            const json = JSON.parse(str);
+            console.log(json);
+
+            document.getElementById("count").innerText = json.count+'/'+json.max_count;
+            if (json.finish && json.finish === true) {
+                //fetch("SESAME API");
+                document.getElementById("five").innerText = '鍵があいたよ';
+                document.getElementById("up").hidden = true;
+                document.getElementById("down").hidden = true;
+                document.getElementById("door").hidden = false;
+            } else {
+                document.getElementById("five").innerText = "";
+                document.getElementById("door").hidden = true;
+                if (json.mode) {
+                    if (json.mode === "up") {
+                        document.getElementById("up").hidden = false;
+                        document.getElementById("down").hidden = true;
+                    } else {
+                        document.getElementById("up").hidden = true;
+                        document.getElementById("down").hidden = false;
+                    }
+                }
+            }
+        };
+    };
+</script>
+</body>
+</html>
