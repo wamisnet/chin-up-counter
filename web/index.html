@@ -39,10 +39,10 @@
     document.getElementById("door").hidden = true;
     document.getElementById("up").hidden = true;
     document.getElementById("down").hidden = false;
-    let plugin = new Obniz("OBNIZ_ID",{local_connect:false});
-    plugin.onconnect = async function () {
+    let obniz = new Obniz("OBNIZ_ID",{local_connect:false});
+    obniz.onconnect = async function () {
         $("#clear_btn").click(function() {
-            plugin.plugin.send("mdc");
+            obniz.plugin.send("mdc");
             document.getElementById("count").innerText =　"";
             document.getElementById("five").innerText = "";
             document.getElementById("door").hidden = true;
@@ -50,9 +50,9 @@
             document.getElementById("down").hidden = false;
         });
         $("#finish_btn").click(function() {
-            plugin.plugin.send(Number($("#finish_input").val()));
+            obniz.plugin.send(Number($("#finish_input").val()));
         });
-        plugin.plugin.onreceive = data => {
+        obniz.plugin.onreceive = data => {
             let str = "";
             for (const dt of data) {
                 str += String.fromCharCode(dt);
