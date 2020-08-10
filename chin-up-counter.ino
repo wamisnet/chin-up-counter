@@ -3,9 +3,9 @@
 #include <obniz.h>
 
 #define CHIN_UP_END 5
-#define AVERAGE_DISTANCE 8
-#define CHIN_UP_DISTANCE_HIGH 700
-#define CHIN_UP_DISTANCE_LOW 500
+#define AVERAGE_DISTANCE 4
+#define CHIN_UP_DISTANCE_HIGH 600
+#define CHIN_UP_DISTANCE_LOW 450
 
 VL53L0X sensor;
 Buzzer buzzer;
